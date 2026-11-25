@@ -151,7 +151,7 @@ comparable en cobertura ni en formato.
 | Pregunta | Respuesta | Consecuencia |
 |---|---|---|
 | Cuenta de Alpaca | **No existe** | Crearla al inicio de la fase 1. Verificar de paso que admite residentes en España: las comparativas la recomiendan pero ninguna lo confirma |
-| Clave de API de Anthropic | **Probablemente sí**, sin confirmar | Verificar con `ant auth status` o en la consola de Anthropic. No bloquea: no se necesita hasta la fase 2 |
+| Clave de API de Anthropic | **No configurada.** Comprobado el 25/11/2026: sin `ANTHROPIC_API_KEY` y sin CLI `ant` en la máquina | Hay que crear una clave en console.anthropic.com con crédito. **Ojo con la confusión habitual:** la suscripción de Claude Code no sirve para llamadas programáticas; son productos con facturación separada. No bloquea: no se necesita hasta la fase 2 (~7-8 $/mes estimados) |
 | Nivel de `pandas` | **Ninguno** | **Es el dato que más afecta al plan.** Ver abajo |
 | Dedicación semanal | Bastantes horas | El plan de meses es viable |
 | Investigar la fuente del calendario de resultados | **Aplazado** a la próxima sesión de trabajo | Es la primera tarea pendiente |
