@@ -70,7 +70,13 @@ operar menos y más barato.
 
 Un algoritmo no es efectivo por ser ingenioso, sino por explotar una ineficiencia concreta
 que todavía existe. Estas son las candidatas que el laboratorio va a probar, cada una con
-su razón estructural de supervivencia:
+su razón estructural de supervivencia.
+
+> **Decidido (2026-11-25):** se arranca con la hipótesis **A (PEAD)** sobre el universo
+> **Russell 2000**, con horizonte **adaptativo con tope de ~21 días hábiles** y posiciones
+> **largas y cortas** para medir alfa sin beta. El razonamiento completo de cada decisión,
+> con lo que se descartó y por qué, está en
+> **[docs/decisiones.md](docs/decisiones.md)**.
 
 ### A. Deriva post-resultados (PEAD) — *la primera que se probará*
 
@@ -201,7 +207,7 @@ detenerse es un resultado válido.
 | Fase | Qué se construye | Criterio para pasar | Estado |
 |---|---|---|---|
 | **0** | Ingesta sin look-ahead, modelo de costes, diario, benchmark | El benchmark está medido y los tests pasan | ✅ **Hecho** |
-| **1** | Primera hipótesis (PEAD) con costes reales | Supera el Sharpe 0,81 del benchmark en datos no usados para ajustar | ⬜ Siguiente |
+| **1** | PEAD sobre Russell 2000, largo-corto, con costes reales | Alfa significativa frente al mercado en 2023-2026, datos no usados para ajustar | 🔵 **Definida**, sin implementar |
 | **2** | Capa LLM: análisis de informes y noticias | Mejora la fase 1 de forma medible. Si no, se descarta: es coste sin alfa | ⬜ |
 | **3** | Paper trading en vivo, 3-6 meses | Resultados coherentes con el backtest | ⬜ |
 | **4** | Decisión informada sobre capital real | — | ⬜ |
@@ -247,10 +253,12 @@ python scripts/run_benchmark.py     # establece el rival a batir
 
 ---
 
-## Glosario
+## Documentación
 
-Si algún término de este README no te resulta familiar —Sharpe, drawdown, alfa, horquilla,
-look-ahead, PEAD— está explicado desde cero en **[docs/glosario.md](docs/glosario.md)**.
+| Documento | Contenido |
+|---|---|
+| **[docs/glosario.md](docs/glosario.md)** | Todo término de mercados del repo explicado desde cero: Sharpe, drawdown, alfa y beta, horquilla, look-ahead, sobreajuste, PEAD, límites al arbitraje. Con números de referencia para calibrar qué es bueno y qué es sospechoso |
+| **[docs/decisiones.md](docs/decisiones.md)** | Registro vivo de decisiones de diseño: qué se decidió, por qué, qué se descartó, preguntas abiertas y riesgos conocidos del plan |
 
 ---
 
