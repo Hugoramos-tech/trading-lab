@@ -247,6 +247,13 @@ python scripts/run_benchmark.py     # establece el rival a batir
 
 ---
 
+## Glosario
+
+Si algún término de este README no te resulta familiar —Sharpe, drawdown, alfa, horquilla,
+look-ahead, PEAD— está explicado desde cero en **[docs/glosario.md](docs/glosario.md)**.
+
+---
+
 ## Bibliografía
 
 **Sobre agentes LLM en trading**
