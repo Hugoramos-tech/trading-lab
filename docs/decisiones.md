@@ -146,24 +146,54 @@ comparable en cobertura ni en formato.
 
 ---
 
-## Preguntas abiertas
+## Preguntas abiertas — respondidas el 2026-11-25
 
-Pendientes de responder antes de implementar:
+| Pregunta | Respuesta | Consecuencia |
+|---|---|---|
+| Cuenta de Alpaca | **No existe** | Crearla al inicio de la fase 1. Verificar de paso que admite residentes en España: las comparativas la recomiendan pero ninguna lo confirma |
+| Clave de API de Anthropic | **Probablemente sí**, sin confirmar | Verificar con `ant auth status` o en la consola de Anthropic. No bloquea: no se necesita hasta la fase 2 |
+| Nivel de `pandas` | **Ninguno** | **Es el dato que más afecta al plan.** Ver abajo |
+| Dedicación semanal | Bastantes horas | El plan de meses es viable |
+| Investigar la fuente del calendario de resultados | **Aplazado** a la próxima sesión de trabajo | Es la primera tarea pendiente |
 
-1. **Cuenta de Alpaca** — ¿existe ya, o hay que crearla? Hace falta para datos de mercado
-   y para el paper trading. Confirmar también que admite residentes en España: las
-   comparativas lo recomiendan pero ninguna lo verifica.
-2. **Clave de API de Anthropic** — ¿hay cuenta con crédito? La capa LLM de la fase 2 cuesta
-   del orden de 7-8 $/mes con la arquitectura de dos niveles. No se necesita hasta la
-   fase 2, pero conviene saberlo.
-3. **Nivel real de Python** — concretamente si hay experiencia con `pandas` (series
-   temporales, `groupby`, `merge`). Determina cuánto se explica en el código y si conviene
-   un paso previo de familiarización.
-4. **Dedicación semanal** — horas disponibles, para dimensionar las fases de forma realista.
-5. **Fuente del calendario de resultados** — hay que localizar de dónde salen las fechas
-   de publicación de resultados y las estimaciones de los analistas para el Russell 2000.
-   Es el dato crítico de la fase 1 y el que más riesgo tiene de no estar disponible gratis.
-   **Esto es lo primero que hay que resolver.**
+### Consecuencia del nivel de pandas
+
+`pandas` es la librería que sostiene todo el proyecto: toda la ingesta, el motor de
+backtest y las métricas están escritos sobre ella. Partir de cero no es un obstáculo, pero
+sí obliga a añadir un paso previo a la fase 1.
+
+**Decisión:** no un tutorial genérico, sino familiarización **sobre los datos del propio
+proyecto** — la serie de SPY que ya está descargada en `cache/`. Conceptos imprescindibles
+y suficientes para seguir el código existente:
+
+- `DataFrame` y `Series`: la tabla y la columna
+- Índice de fechas: seleccionar por rango, que es la base de `PriceView`
+- `pct_change()`, `rolling()`, `shift()`: retornos, medias móviles y el desplazamiento
+  temporal que impide mirar el futuro
+- `groupby()` y `merge()`: necesarios en la fase 1 para cruzar eventos de resultados con
+  precios
+
+Ese último punto, `merge` sobre fechas, es el que de verdad hará falta para la hipótesis
+PEAD: cruzar "qué día publicó resultados cada empresa" con "cómo se movió su precio
+después".
+
+---
+
+## Punto de retomada
+
+**Lo siguiente, en este orden:**
+
+1. **Investigar la fuente de datos de resultados** (aplazado por decisión de Hugo). Hay que
+   localizar, para el Russell 2000: fechas de publicación de resultados, y estimaciones de
+   consenso de analistas o un sustituto. **Es el riesgo número uno del proyecto**: si no hay
+   fuente gratuita, la hipótesis PEAD clásica no se puede medir y hay que pasar al plan
+   alternativo (definir la sorpresa con el LLM a partir del propio informe, sin consenso).
+2. **Crear la cuenta de Alpaca** y guardar las claves en `.env` (ya está en `.gitignore`).
+3. **Paso de familiarización con pandas** sobre los datos de `cache/`.
+4. Solo entonces: implementar la señal de la fase 1.
+
+**Estado del código:** fase 0 completa y funcionando. 10 tests en verde.
+`python scripts/run_benchmark.py` reproduce el benchmark en cualquier momento.
 
 ---
 
@@ -185,3 +215,4 @@ La pata corta no es ejecutable en real por falta de préstamo | Medio — reduci
 2026-11-25 | Fase 0 completada: ingesta, costes, motor, métricas, diario, benchmark |
 2026-11-25 | Glosario de mercados añadido |
 2026-11-25 | Decisiones D1-D4 tomadas. Fase 1 definida, pendiente de resolver las preguntas abiertas |
+| 2026-11-25 | Preguntas abiertas respondidas. Se anade paso de familiarizacion con pandas. Proxima tarea: investigar la fuente de datos de resultados |
